@@ -1,0 +1,57 @@
+html {
+    height: 100%
+}
+body.signin {
+    height: auto;
+    background: url(../img/login-bg.png) no-repeat center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover
+}
+#div_lgName,#div_pd{
+	width: 500px;
+	margin-bottom: 70px;
+	background-color: white;
+	border-radius: 100px;
+	height: 100%;
+	display: flex;
+
+}
+.password,.loginName{
+	width: 70%;
+	background: white; !important;
+	margin: 0 auto;
+	height: 70px;
+	line-height: 70px;
+	border: none;
+	outline: none;
+	font-size: 20px;
+}
+#img_lgname{
+	margin: 18px 0px 0px 17px;
+	width: 40px;
+	height: 40px;
+
+}
+#img_pd{
+	margin: 20px 0px 0px 19px;
+	width: 32px;
+	height: 29px;
+}
+#btnSubmit{
+	width: 150px;
+	border-radius: 60px;
+	background-color: #288CEC;
+	color:white;
+	margin: 0 auto;
+	height: 50px;
+	font-size: 20px;
+}
+#signupForm{
+
+	width: 500px;
+	margin-left: 55%;
+	margin-top: 350px;
+}
+

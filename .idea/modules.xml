@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/RuoYi-fast-master.iml" filepath="$PROJECT_DIR$/.idea/RuoYi-fast-master.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RuoYi-fast-master/ruoyi.iml" filepath="$PROJECT_DIR$/RuoYi-fast-master/ruoyi.iml" />
+    </modules>
+  </component>
+</project>

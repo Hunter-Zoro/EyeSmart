@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('角色列表')" />
+</head>
+<body class="gray-bg">
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="task-form" th:object="${taskDetail}">
+					<div class="select-list">
+						<ul>
+							<li>
+								监管内容：<input type="text" name="content"/>
+							</li>
+
+							<li>
+								审核状态：<select name="artStatus" th:with="type=${@dict.getType('task_sh')}">
+									<option value="-2">所有</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+								</select>
+							</li>
+
+<!--							<li class="select-time">-->
+<!--								<label>创建时间： </label>-->
+<!--								<input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>-->
+<!--								<span>-</span>-->
+<!--								<input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]"/>-->
+<!--							</li>-->
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+							    <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+					<div>
+						<input style="display: none" id="taskId" name="taskId" placeholder="请输入手机号码" class="form-control" type="text" maxlength="11" th:field="*{taskId}">
+					</div>
+				</form>
+			</div>
+		
+			<div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()">
+		            <i class="fa fa-remove"></i> 删除
+		        </a>
+<!--		        <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:role:export">-->
+<!--		            <i class="fa fa-download"></i> 导出-->
+<!--		        </a>-->
+	        </div>
+	        
+	        <div class="col-sm-12 select-table table-striped">
+			    <table id="bootstrap-table"></table>
+				<div class="row">
+					<div class="col-sm-offset-5 col-sm-10">
+						<button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+	<script th:inline="javascript">
+		// var editFlag = [[${@permission.hasPermi('system:role:edit')}]];
+		// var removeFlag = [[${@permission.hasPermi('system:role:remove')}]];
+		var taskid = $("#taskId").val()
+		$(function() {
+			var options = {
+				uniqueId: "id",
+				url: "/examine/task/taskDetailList/"+taskid,
+				// createUrl: prefix + "/add",
+				// updateUrl: prefix + "/edit/{id}",
+				removeUrl: "/artificial/artificial/remove",
+				// exportUrl: prefix + "/export",
+				//sortName: "roleSort",
+				modalName: "角色",
+				columns: [{
+					checkbox: true
+				},
+				{
+					title: '序号',
+					formatter: function (value, row, index) {
+						return $.table.serialNumber(index);
+					}
+				},
+				{
+					field: 'taskId',
+					title: '任务id',
+					sortable: true
+				},
+				{
+					field: 'taskName',
+					title: '任务名称',
+					sortable: true
+				},
+				{
+					field: 'pageNum',
+					title: '页码',
+					sortable: true
+				},
+				{
+					field: 'content',
+					title: '内容',
+					sortable: true
+				},
+				{
+					field: 'errorType',
+					title: '错误类型',
+					sortable: true,
+					formatter: function (value, row, index) {
+						if (value == "0") {
+							return "敏感词";
+
+						} else {
+							return "其他";
+						}
+					}
+
+				}]
+			};
+			$.table.init(options);
+		});
+		
+
+	</script>
+</body>
+</html>

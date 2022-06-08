@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.examine.task.mapper.TaskMapper">
+
+    <resultMap type="Task" id="TaskResult">
+        <id property="id" column="id"/>
+        <result property="tjTime" column="tj_time"/>
+        <result property="content" column="content"/>
+        <result property="result" column="result"/>
+        <result property="aiStatus" column="ai_status"/>
+        <result property="artStatus" column="art_status"/>
+        <result property="endTime" column="end_time"/>
+        <result property="artResult" column="art_result"/>
+        <result property="artTime" column="art_time"/>
+        <result property="aiTime" column="ai_time"/>
+        <result property="errorNum" column="error_num"/>
+        <result property="filePath" column="file_path"/>
+    </resultMap>
+
+    <resultMap type="TaskDetail" id="TaskDetailResult">
+        <result property="id"    column="id"    />
+        <result property="taskId"    column="task_id"    />
+        <result property="pageNum"    column="page_num"    />
+        <result property="content"    column="content"    />
+        <result property="errorType"    column="error_type"    />
+    </resultMap>
+
+    <sql id="selectTaskLogVo">
+        select id, tj_time, content, result, ai_status, art_status, end_time,art_result,art_time,ai_time,error_num,file_path
+        from task
+        <where>
+            <if test=" id != null">
+                And id = #{id}
+            </if>
+            <if test=" artStatus != 0">
+                And art_status = #{artStatus}
+            </if>
+            <if test=" aiStatus != 0">
+                And ai_status = #{aiStatus}
+            </if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+        </where>
+    </sql>
+
+    <select id="selectTaskList" parameterType="Task" resultMap="TaskResult">
+        <include refid="selectTaskLogVo"/>
+
+    </select>
+
+    <sql id="selectTaskDetailVo">
+        select id, task_id, page_num, content, error_type from task_detail
+        <where>
+            <if test=" taskId != null">
+                And task_id = #{taskId}
+            </if>
+            <if test=" id != null">
+                And id = #{id}
+            </if>
+
+
+        </where>
+    </sql>
+
+    <select id="selectTaskDetailList" parameterType="TaskDetail" resultMap="TaskDetailResult">
+        <include refid="selectTaskDetailVo"/>
+    </select>
+    <insert id="insertTask" parameterType="Task" useGeneratedKeys="true" keyProperty="id">
+        insert into task
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tjTime != null">tj_time,</if>
+            <if test="content != null">content,</if>
+            <if test="result != null">result,</if>
+            <if test="aiStatus != null">ai_status,</if>
+            <if test="artStatus != null">art_status,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="artResult != null">art_result,</if>
+            <if test="aiTime != null">ai_time,</if>
+            <if test="artTime != null">art_time,</if>
+            <if test="filePath != null">file_path,</if>
+            <if test="errorNum != null">error_num,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tjTime != null">#{tjTime},</if>
+            <if test="content != null">#{content},</if>
+            <if test="result != null">#{result},</if>
+            <if test="aiStatus != null">#{aiStatus},</if>
+            <if test="artStatus != null">#{artStatus},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="artResult != null">#{artResult},</if>
+            <if test="aiTime != null">#{aiTime},</if>
+            <if test="artTime != null">#{artTime},</if>
+            <if test="filePath != null">#{filePath},</if>
+            <if test="errorNum != null">#{errorNum},</if>
+        </trim>
+    </insert>
+    <update id="updateTask" parameterType="Task">
+        update task
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="tjTime != null">tj_time=#{tjTime},</if>
+            <if test="content != null">content=#{content},</if>
+            <if test="result != null">result=#{result},</if>
+            <if test="aiStatus != null">ai_status=#{aiStatus},</if>
+            <if test="artStatus != null">art_status=#{artStatus},</if>
+            <if test="endTime != null">end_time=#{endTime},</if>
+            <if test="artResult != null">art_result=#{artResult},</if>
+            <if test="aiTime != null">ai_time=#{aiTime},</if>
+            <if test="artTime != null">art_time=#{artTime},</if>
+            <if test="filePath != null">file_path=#{filePath},</if>
+            <if test="errorNum != null">error_num=#{errorNum},</if>
+        </trim>
+        where id = #{id}
+    </update>
+    <insert id="insertTaskDetail" parameterType="TaskDetail">
+        insert into task_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="taskId != null">task_id,</if>
+            <if test="pageNum != null">page_num,</if>
+            <if test="content != null">content,</if>
+            <if test="errorType != null">error_type,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="taskId != null">#{taskId},</if>
+            <if test="pageNum != null">#{pageNum},</if>
+            <if test="content != null">#{content},</if>
+            <if test="errorType != null">#{errorType},</if>
+        </trim>
+    </insert>
+
+    <update id="updateTaskDetail" parameterType="TaskDetail">
+        update task_detail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="taskId != null">task_id = #{taskId},</if>
+            <if test="pageNum != null">page_num = #{pageNum},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="errorType != null">error_type = #{errorType},</if>
+        </trim>
+        where id = #{id}
+    </update>
+    <update id="executeSql" parameterType="java.lang.String">
+         ${value}
+    </update>
+
+    <delete id="deleteTaskDetailByTask" parameterType="TaskDetail">
+        delete from task_detail
+        <where>
+            <if test=" id != null">
+                And id = #{id}
+            </if>
+            <if test=" taskId != 0">
+                And task_id = #{taskId}
+            </if>
+        </where>
+
+    </delete>
+
+    <delete id="deleteTaskDetailByIds" parameterType="Long">
+        delete from task_detail where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper> 

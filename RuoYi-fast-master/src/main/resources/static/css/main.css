@@ -1,0 +1,8 @@
+body{
+    height: auto;
+    background: url(../img/index_img.png) no-repeat center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover
+}
